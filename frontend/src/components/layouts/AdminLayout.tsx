@@ -15,7 +15,7 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const { signOut, user } = useAuth();
+  const { logout, user } = useAuth();
   const location = useLocation();
 
   const navigation = [
@@ -69,12 +69,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               <User className="h-6 w-6 text-white" />
             </div>
             <div>
-              <p className="font-medium text-white">{user?.email}</p>
+              <p className="font-medium text-white">{user?.username}</p>
               <p className="text-blue-200 text-sm">Administrator</p>
             </div>
           </div>
           <button
-            onClick={signOut}
+            onClick={logout}
             className="flex items-center px-4 py-2 text-blue-100 hover:text-white hover:bg-blue-800 rounded-lg transition-colors w-full"
           >
             <LogOut className="h-4 w-4 mr-2" />

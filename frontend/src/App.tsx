@@ -8,6 +8,7 @@ import AlumniPortal from './pages/alumni/AlumniPortal';
 import AdminPortal from './pages/admin/AdminPortal';
 import StudentPortal from './pages/student/StudentPortal';
 import ProtectedRoute from './components/ProtectedRoute';
+import NetworkingPortal from './pages/networking/NetworkingPortal';
 
 function App() {
   return (
@@ -21,27 +22,33 @@ function App() {
             <Route 
               path="/alumni/*" 
               element={
-                <ProtectedRoute allowedRoles={['Alumni']}>
+                // <ProtectedRoute allowedRoles={['Alumni']}>
                   <AlumniPortal />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               } 
             />
             <Route 
               path="/admin/*" 
               element={
-                <ProtectedRoute allowedRoles={['Admin']}>
+                // <ProtectedRoute allowedRoles={['Admin']}>
                   <AdminPortal />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               } 
             />
             <Route 
               path="/student/*" 
               element={
-                <ProtectedRoute allowedRoles={['Student']}>
+                // <ProtectedRoute allowedRoles={['Student']}>
                   <StudentPortal />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               } 
             />
+
+            <Route
+              path="/networking/*"
+              element={<NetworkingPortal />}
+            />
+
           </Routes>
         </div>
       </Router>
