@@ -69,7 +69,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               <User className="h-6 w-6 text-white" />
             </div>
             <div>
-              <p className="font-medium text-white">{user?.username}</p>
+              <p className="font-medium text-white">{user?.email}</p>
               <p className="text-blue-200 text-sm">Administrator</p>
             </div>
           </div>

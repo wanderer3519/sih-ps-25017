@@ -26,8 +26,8 @@ import {
   Activity,
   Upload
 } from 'lucide-react';
-import SendMessageModal from '../../components/SendMessageModal';
-import AddToEventModal from '../../components/AddToEventModal';
+import SendMessageModal from '../../components/SendMessageModal.tsx';
+import AddToEventModal from '../../components/AddToEventModal.tsx';
 
 interface AlumniData {
   id: string;

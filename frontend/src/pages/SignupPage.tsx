@@ -5,7 +5,7 @@ import { AuthContext } from '../contexts/AuthContext';
 const SignupPage: React.FC = () => {
   const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('Alumini'); // Default role
+  const [role, setRole] = useState('alumni'); // Default role
 
   const { signup } = useContext(AuthContext);
   const navigate = useNavigate();

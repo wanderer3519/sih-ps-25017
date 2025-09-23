@@ -1,34 +1,26 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Users, Briefcase, Bell, Link } from 'lucide-react';
+import React, { useState } from 'react';
+import { Users, Briefcase, Bell } from 'lucide-react';
 
 interface NetworkingLayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
+type TabKey = 'referrals' | 'recruitment' | 'notifications';
+
 const NetworkingLayout: React.FC<NetworkingLayoutProps> = ({ children }) => {
-  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<TabKey>('referrals');
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <header className="bg-blue-900 text-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <Users className="h-9 w-9 text-yellow-400" />
-            <div>
-              <h1 className="text-2xl font-bold font-['Poppins']">Networking</h1>
-              <p className="text-blue-200 text-sm">Referrals, recruitment and job updates</p>
-            </div>
-          </div>
+  const nav = [
+    { key: 'referrals' as TabKey, name: 'Referrals', icon: Users },
+    { key: 'recruitment' as TabKey, name: 'Recruitment', icon: Briefcase },
+    { key: 'notifications' as TabKey, name: 'Notifications', icon: Bell },
+  ];
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'referrals':
+        return (
           <div>
-            <button onClick={() => navigate('/')} className="text-blue-100 text-sm hover:text-white">Home</button>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid lg:grid-cols-3 gap-8">
-          <section className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold">Referrals</h2>
@@ -46,7 +38,12 @@ const NetworkingLayout: React.FC<NetworkingLayoutProps> = ({ children }) => {
                 ))}
               </div>
             </div>
+          </div>
+        );
 
+      case 'recruitment':
+        return (
+          <div>
             <div className="bg-white rounded-2xl shadow p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold">Recruitment</h2>
@@ -66,12 +63,15 @@ const NetworkingLayout: React.FC<NetworkingLayoutProps> = ({ children }) => {
                 ))}
               </div>
             </div>
-          </section>
+          </div>
+        );
 
-          <aside>
-            <div className="bg-white rounded-2xl shadow p-6 space-y-6">
-              <div className="flex items-center justify-between">
-                <h4 className="font-semibold">Job Notifications</h4>
+      case 'notifications':
+        return (
+          <div>
+            <div className="bg-white rounded-2xl shadow p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold">Job Notifications</h2>
                 <div className="text-sm text-gray-400">5 new</div>
               </div>
               <div className="space-y-3">
@@ -87,43 +87,65 @@ const NetworkingLayout: React.FC<NetworkingLayoutProps> = ({ children }) => {
                   </div>
                 ))}
               </div>
-
               <div className="pt-4 border-t border-gray-100">
                 <button className="w-full bg-blue-900 text-white py-2 rounded-lg">View all notifications</button>
               </div>
             </div>
+          </div>
+        );
 
-            <div className="mt-6 bg-white rounded-2xl shadow p-6">
-              <h4 className="font-semibold mb-3">Quick Links</h4>
-              <ul className="space-y-2">
-                <li className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <Link className="h-4 w-4 text-blue-600" />
-                    <span className="text-sm">Alumni Directory</span>
-                  </div>
-                  <button className="text-sm text-blue-600">Open</button>
-                </li>
-                <li className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <Briefcase className="h-4 w-4 text-blue-600" />
-                    <span className="text-sm">Career Portal</span>
-                  </div>
-                  <button className="text-sm text-blue-600">Open</button>
-                </li>
-              </ul>
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      <div className="w-64 bg-blue-900 text-white flex flex-col">
+        <div className="p-6 border-b border-blue-800">
+          <div className="flex items-center space-x-3">
+            <Users className="h-8 w-8 text-yellow-400" />
+            <div>
+              <h1 className="text-xl font-bold font-['Poppins']">Networking</h1>
+              <p className="text-blue-200 text-sm">Referrals · Recruitment · Jobs</p>
             </div>
-          </aside>
+          </div>
         </div>
-      </main>
 
-      <footer className="bg-blue-900 text-white py-6 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-blue-200">© 2025 Punjab Engineering Institute</p>
+        <nav className="flex-1 px-4 py-6">
+          <ul className="space-y-2">
+            {nav.map((item) => {
+              const Icon = item.icon;
+              const selected = activeTab === item.key;
+              return (
+                <li key={item.key}>
+                  <button
+                    onClick={() => setActiveTab(item.key)}
+                    className={`flex items-center w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                      selected ? 'bg-yellow-500 text-white' : 'text-blue-100 hover:bg-blue-800 hover:text-white'
+                    }`}
+                  >
+                    <Icon className="h-5 w-5 mr-3" />
+                    {item.name}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <div className="p-4 border-t border-blue-800">
+          <div className="text-sm text-blue-200">Quick Links</div>
+          <div className="mt-3 space-y-2">
+            <button className="text-blue-100 hover:text-white w-full text-left">Alumni Directory</button>
+            <button className="text-blue-100 hover:text-white w-full text-left">Career Portal</button>
+          </div>
         </div>
-      </footer>
+      </div>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto p-8">
+        {renderContent()}
+        {/* allow children below content if provided */}
         {children}
       </div>
     </div>
