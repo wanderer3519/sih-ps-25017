@@ -7,7 +7,7 @@ import {
   Calendar,
   LogOut,
   GraduationCap,
-  User 
+  User,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
